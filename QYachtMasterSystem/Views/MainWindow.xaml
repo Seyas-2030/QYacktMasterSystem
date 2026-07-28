@@ -1,0 +1,357 @@
+<Window x:Class="QYachtMaster.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="⚓ Q-Yacht Master Enterprise Local / كيو يخت ماستر إنتربرايز" 
+        Height="700" Width="1000"
+        Background="{DynamicResource BackgroundBrush}"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+
+        <DropShadowEffect x:Key="CardShadow" BlurRadius="12" ShadowDepth="1" Direction="270" Color="#000000" Opacity="0.08"/>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Name="Border" CornerRadius="6" Padding="{TemplateBinding Padding}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource PrimaryButtonBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource PrimaryButtonBrush}"/>
+                                <Setter TargetName="Border" Property="BorderThickness" Value="1.5"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Border" Property="Opacity" Value="0.6"/>
+                                <Setter TargetName="Border" Property="Background" Value="#F8ECEE"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="#F3DDE0"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="Border" CornerRadius="6" Padding="{TemplateBinding Padding}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Opacity" Value="0.9"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Opacity" Value="0.75"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Border" Property="Opacity" Value="0.4"/>
+                                <Setter TargetName="Border" Property="Background" Value="#E5D2D5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="{DynamicResource PrimaryButtonBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style x:Key="ShortcutButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Padding" Value="14,8"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Background" Value="#F8ECEE"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="25">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="{DynamicResource HeaderBackgroundBrush}" CornerRadius="10" Padding="25,18" Margin="0,0,0,20" Effect="{StaticResource CardShadow}">
+            <DockPanel LastChildFill="False" VerticalAlignment="Center">
+                <StackPanel DockPanel.Dock="Left" VerticalAlignment="Center">
+                    <TextBlock Text="Q-Yacht Master System" FontSize="22" FontWeight="Bold" Foreground="{DynamicResource HeaderForegroundBrush}"/>
+                    <TextBlock Text="📍 Lusail Marina" FontSize="13" Foreground="#E5D2D5" Margin="0,6,0,0"/>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center">
+                    <TextBlock Text="كيو يخت ماستر إنتربرايز" FontSize="22" FontWeight="Bold" Foreground="{DynamicResource HeaderForegroundBrush}" TextAlignment="Right"/>
+                    <TextBlock Text="📍 لوسيل مارينا" FontSize="13" Foreground="#E5D2D5" Margin="0,6,0,0" TextAlignment="Right"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <Border Grid.Row="1" Background="{DynamicResource WarningBannerBrush}" 
+                BorderBrush="{DynamicResource WarningBorderBrush}" 
+                BorderThickness="1" CornerRadius="8" Padding="15,12" Margin="0,0,0,20"
+                Visibility="{Binding HasDebt, Converter={StaticResource BoolToVis}}"
+                Effect="{StaticResource CardShadow}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="⚠️ " FontSize="18" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding DebtWarningText}" 
+                               Foreground="{DynamicResource WarningTextBrush}" 
+                               FontWeight="Bold" FontSize="15" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Content="📋 Statement / كشف الحساب"
+                            Click="OnViewDebtStatementClick"
+                            Background="#8B263E" Foreground="White"
+                            FontWeight="Bold" Padding="12,10" Margin="0,0,10,0" VerticalAlignment="Center"/>
+
+                    <Button Content="💵 Accept Cash &amp; Open / قبول السداد النقدي والدخول"
+                        Command="{Binding AcceptCashCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                        Background="#D32F2F" Foreground="White"
+                        FontWeight="Bold" Padding="18,10" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1.2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Background="{DynamicResource CardBackgroundBrush}" 
+                    BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" 
+                    CornerRadius="10" Padding="22" Margin="0,0,12,0" Effect="{StaticResource CardShadow}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <DockPanel Grid.Row="0" LastChildFill="False" Margin="0,0,0,15">
+                        <TextBlock Text="Customer Profile" DockPanel.Dock="Left" FontSize="15" FontWeight="Bold"/>
+                        <TextBlock Text="بيانات العميل" DockPanel.Dock="Right" FontSize="15" FontWeight="Bold"/>
+                    </DockPanel>
+
+                    <Grid Grid.Row="1" IsEnabled="{Binding IsFieldsEnabled}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,12">
+                            <DockPanel LastChildFill="False" Margin="0,0,0,6">
+                                <TextBlock Text="Customer Name:" DockPanel.Dock="Left" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                <TextBlock Text="الاسم الكامل" DockPanel.Dock="Right" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                            </DockPanel>
+                            <TextBox Text="{Binding CustomerName, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,12">
+                            <DockPanel LastChildFill="False" Margin="0,0,0,6">
+                                <TextBlock Text="Address:" DockPanel.Dock="Left" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                <TextBlock Text="العنوان" DockPanel.Dock="Right" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                            </DockPanel>
+                            <TextBox Text="{Binding CustomerAddress, UpdateSourceTrigger=PropertyChanged}" Height="55" TextWrapping="Wrap" AcceptsReturn="True" Padding="10,6"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,0,0,12">
+                            <DockPanel LastChildFill="False" Margin="0,0,0,6">
+                                <TextBlock Text="Work Phone:" DockPanel.Dock="Left" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                <TextBlock Text="تلفون العمل" DockPanel.Dock="Right" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                            </DockPanel>
+                            <TextBox Text="{Binding WorkPhone, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,0,0,12">
+                            <DockPanel LastChildFill="False" Margin="0,0,0,6">
+                                <TextBlock Text="Other Phone:" DockPanel.Dock="Left" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                <TextBlock Text="تلفون آخر" DockPanel.Dock="Right" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                            </DockPanel>
+                            <TextBox Text="{Binding OtherPhone, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="1" Background="{DynamicResource CardBackgroundBrush}" 
+                    BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" 
+                    CornerRadius="10" Padding="20" Margin="12,0,0,0" Effect="{StaticResource CardShadow}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <DockPanel Grid.Row="0" LastChildFill="False" Margin="0,0,0,15">
+                        <TextBlock Text="Customer Verification" DockPanel.Dock="Left" FontSize="15" FontWeight="Bold"/>
+                        <TextBlock Text="التحقق من العميل" DockPanel.Dock="Right" FontSize="15" FontWeight="Bold"/>
+                    </DockPanel>
+
+                    <StackPanel Grid.Row="1" Margin="0,0,0,15">
+                        <DockPanel LastChildFill="False" Margin="0,0,0,6">
+                            <TextBlock Text="Mobile Phone:" DockPanel.Dock="Left" Foreground="{DynamicResource PrimaryTextBrush}" FontSize="13"/>
+                            <TextBlock Text="رقم الهاتف الجوال" DockPanel.Dock="Right" Foreground="{DynamicResource PrimaryTextBrush}" FontSize="13"/>
+                        </DockPanel>
+                        <TextBox Text="{Binding SearchPhone, UpdateSourceTrigger=PropertyChanged}" 
+                                 MaxLength="15" FontSize="18" FontWeight="Bold" Padding="10,10"
+                                 HorizontalContentAlignment="Center" Background="#FAFAFA"
+                                 ToolTip="Enter phone number (8 digits local or +974 format) / أدخل رقم الهاتف (8 أرقام أو الصيغة الدولية)"/>
+                    </StackPanel>
+
+                    <Border Grid.Row="2" Background="{DynamicResource BackgroundBrush}" CornerRadius="8" Padding="12" Margin="0,0,0,15">
+                        <TextBlock Text="{Binding StatusMessage}" 
+                                   Foreground="{Binding StatusBrush}" 
+                                   FontWeight="Bold" FontSize="13" TextAlignment="Center" TextWrapping="Wrap"/>
+                    </Border>
+
+                    <Border Grid.Row="4" Background="#F4F6F7" Margin="0,15,0,0" Padding="12" CornerRadius="6">
+                        <StackPanel>
+                            <DockPanel LastChildFill="False" Margin="0,0,0,4">
+                                <TextBlock Text="Active Operator:" DockPanel.Dock="Left" Foreground="{DynamicResource SecondaryTextBrush}" FontSize="11"/>
+                                <TextBlock Text="الموظف الحالي" DockPanel.Dock="Right" Foreground="{DynamicResource SecondaryTextBrush}" FontSize="11"/>
+                            </DockPanel>
+                            <TextBlock Text="{Binding CurrentUsername}" Foreground="{DynamicResource PrimaryTextBrush}" FontWeight="Bold" FontSize="14"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Border Grid.Row="3" Background="{DynamicResource CardBackgroundBrush}"
+                BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
+                CornerRadius="10" Padding="15,10" Margin="0,15,0,0" Effect="{StaticResource CardShadow}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Quick Access / وصول سريع:" Foreground="{DynamicResource SecondaryTextBrush}"
+                           VerticalAlignment="Center" FontSize="13" FontWeight="SemiBold" Margin="0,0,15,0"/>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+
+                    <Button Content="🔄 Parts Sync / مزامنة المخزن"
+                            Click="OnOpenSyncClick"
+                            Style="{StaticResource ShortcutButtonStyle}" Margin="0,0,10,0"/>
+
+                    <!-- Return Part button — only enabled when a customer is loaded -->
+                    <Button Content="🔁 Return Part / استرجاع قطعة"
+                            Click="OnReturnPartClick"
+                            IsEnabled="{Binding IsCustomerFound}"
+                            Style="{StaticResource ShortcutButtonStyle}"
+                            Background="#FFEBEE" Foreground="#C0392B"
+                            FontWeight="SemiBold"
+                            Margin="0,0,10,0"
+                            ToolTip="Return a part from a locked invoice / إرجاع قطعة من فاتورة مقفلة"/>
+
+                    <Button Content="🔐 Admin Panel / لوحة الإدارة"
+                            Click="OnOpenAdminClick"
+                            Style="{StaticResource ShortcutButtonStyle}"/>
+
+                    <Button Content="📡 Monitor Board / لوحة المراقبة"
+                            Click="OnOpenDispatcherClick"
+                            Style="{StaticResource ShortcutButtonStyle}"
+                            Background="#EAF4FF" Foreground="#1A5276"
+                            Margin="10,0,0,0"
+                            ToolTip="Open Workshop &amp; Yacht Monitoring Board / فتح لوحة مراقبة الورشة واليخوت"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="4" Background="{DynamicResource CardBackgroundBrush}" 
+                BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" 
+                CornerRadius="10" Padding="20,15" Margin="0,12,0,0" Effect="{StaticResource CardShadow}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0" LastChildFill="False">
+                    <TextBlock DockPanel.Dock="Left" 
+                               Text="Complete all basic entries to maintain correct job card tracking and financial records." 
+                               Foreground="{DynamicResource SecondaryTextBrush}" 
+                               VerticalAlignment="Center" 
+                               TextWrapping="Wrap" 
+                               FontSize="11" 
+                               LineHeight="16"
+                               TextAlignment="Left"
+                               MaxWidth="450"
+                               HorizontalAlignment="Left"/>
+
+                    <TextBlock DockPanel.Dock="Right" 
+                               Text="تأكد من استكمال كافة البيانات الأساسية قبل فتح بطاقة العمل لضمان صحة الفواتير والتقارير المالية." 
+                               Foreground="{DynamicResource SecondaryTextBrush}" 
+                               VerticalAlignment="Center" 
+                               TextWrapping="Wrap" 
+                               FontSize="11" 
+                               LineHeight="16"
+                               TextAlignment="Right"
+                               MaxWidth="450"
+                               HorizontalAlignment="Right"/>
+                </DockPanel>
+
+                <Button Grid.Row="1" Content="Register &amp; Open Job Card / تسجيل العميل وفتح بطاقة العمل"
+                    Command="{Binding RegisterOrOpenCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                    IsEnabled="{Binding IsJobCardButtonEnabled}"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Padding="40,14" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,15,0,0"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

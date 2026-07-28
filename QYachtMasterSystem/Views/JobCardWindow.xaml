@@ -1,0 +1,297 @@
+<Window x:Class="QYachtMaster.Views.JobCardWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Name="CurrentWindow"
+        Title="Job Card Compiler / منشئ بطاقة العمل" 
+        Height="850" Width="950"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource BackgroundBrush}">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Main Form ScrollViewer -->
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+            <Border Background="{DynamicResource CardBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="8" Padding="30" Margin="10">
+                <StackPanel>
+                    
+                    <!-- Paper Slip Header -->
+                    <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,2" Padding="0,0,0,15" Margin="0,0,0,20">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Q-Yacht Master / نظام كيو ياخت ماستر لإدارة الخدمات والصيانة" 
+                                           FontSize="22" FontWeight="Bold" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                <TextBlock Text="Lusail Marina, Doha, Qatar / لوسيل مارينا، الدوحة، قطر" 
+                                           FontSize="13" Foreground="{DynamicResource SecondaryTextBrush}" Margin="0,5,0,0"/>
+                                <TextBlock Text="REPAIR ORDER / أمر إصلاح" 
+                                           FontSize="18" FontWeight="Bold" Foreground="{DynamicResource PrimaryButtonBrush}" Margin="0,15,0,0"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                <TextBlock Text="Fix Right First Time / أصلح صح من أول مرة" 
+                                           FontStyle="Italic" FontWeight="Bold" Foreground="{DynamicResource SecondaryTextBrush}"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                    <TextBlock Text="No: / رقم البطاقة: " FontWeight="Bold" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                    <TextBlock Text="{Binding JobCardNo}" FontWeight="Bold" Foreground="{DynamicResource DangerBrush}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- Time & Date -->
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                            <TextBlock Text="Arrival Time / وقت الوصول: " VerticalAlignment="Center" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                            <TextBox Text="{Binding ArrivalTime}" Width="150" Margin="10,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <TextBlock Text="Date / التاريخ: " VerticalAlignment="Center" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                            <TextBox Text="{Binding JobDate}" Width="150" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Customer Details Card -->
+                    <GroupBox Header="Customer Details / بيانات العميل" Foreground="{DynamicResource PrimaryTextBrush}" Margin="0,0,0,20" Padding="10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,10,10">
+                                <TextBlock Text="Name / اسم العميل:" FontSize="12" Foreground="{DynamicResource SecondaryTextBrush}"/>
+                                <TextBlock Text="{Binding CustomerName}" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="Address / العنوان:" FontSize="12" Foreground="{DynamicResource SecondaryTextBrush}"/>
+                                <TextBlock Text="{Binding CustomerAddress}" FontSize="14" Foreground="{DynamicResource PrimaryTextBrush}" TextWrapping="Wrap"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="10,0,0,0">
+                                <TextBlock Text="Phone Numbers / أرقام التلفون:" FontWeight="Bold" Foreground="{DynamicResource PrimaryTextBrush}" Margin="0,0,0,5"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="Mobile / جوال: " FontSize="12" Width="90" Foreground="{DynamicResource SecondaryTextBrush}"/>
+                                    <TextBlock Text="{Binding MobilePhone}" FontWeight="Bold" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="Work / العمل: " FontSize="12" Width="90" Foreground="{DynamicResource SecondaryTextBrush}"/>
+                                    <TextBlock Text="{Binding WorkPhone}" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="Other / آخر: " FontSize="12" Width="90" Foreground="{DynamicResource SecondaryTextBrush}"/>
+                                    <TextBlock Text="{Binding OtherPhone}" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+
+                    <!-- Time Required / الأوقات المطلوبة -->
+                    <GroupBox Header="Time Required / الأوقات المطلوبة" Foreground="{DynamicResource PrimaryTextBrush}" Margin="0,0,0,20" Padding="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBlock Text="Pick up / استلام السيارة: " VerticalAlignment="Center" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                <TextBox Text="{Binding PickupTime}" Width="100" Margin="10,0,0,0"/>
+                                <ComboBox SelectedValue="{Binding PickupPeriod}" Width="60" Margin="5,0,0,0">
+                                    <ComboBoxItem Content="AM"/>
+                                    <ComboBoxItem Content="PM"/>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBlock Text="Drop off / تسليم السيارة: " VerticalAlignment="Center" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                <TextBox Text="{Binding DropoffTime}" Width="100" Margin="10,0,0,0"/>
+                                <ComboBox SelectedValue="{Binding DropoffPeriod}" Width="60" Margin="5,0,0,0">
+                                    <ComboBoxItem Content="AM"/>
+                                    <ComboBoxItem Content="PM"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+
+                    <!-- Vehicle Details -->
+                    <GroupBox Header="Vehicle Details / معلومات السيارة" Foreground="{DynamicResource PrimaryTextBrush}" Margin="0,0,0,20" Padding="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,10,10">
+                                    <TextBlock Text="Reg No / رقم اللوحة: *" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                    <TextBox Text="{Binding RegNo, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="0" Grid.Column="1" Margin="10,0,0,10">
+                                    <TextBlock Text="Year / سنة الصنع:" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                    <TextBox Text="{Binding Year, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,10,10">
+                                    <TextBlock Text="Make / الماركة:" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                    <TextBox Text="{Binding Make, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="1" Margin="10,0,0,10">
+                                    <TextBlock Text="Model / الموديل:" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                    <TextBox Text="{Binding Model, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,0,10,0">
+                                    <TextBlock Text="Color / اللون:" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                    <TextBox Text="{Binding Color, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Grid.Column="1" Margin="10,0,0,0">
+                                    <TextBlock Text="Odometer / عداد المسافة:" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                    <TextBox Text="{Binding Odometer, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Simple visual placeholder representing a car inspection layout -->
+                            <Border Grid.Column="1" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="6" Background="{DynamicResource BackgroundBrush}" Margin="20,0,0,0" Padding="5">
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="[مخطط هيكل السيارة]" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="[Vehicle Diagram Place]" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </GroupBox>
+
+                    <!-- The 8 Repair Services Required -->
+                    <GroupBox Header="Repair Services Required / وصف العمل على السيارة (8 أسطر)" Foreground="{DynamicResource PrimaryTextBrush}" Margin="0,0,0,20" Padding="10">
+                        <StackPanel>
+                            <ItemsControl ItemsSource="{Binding RepairLines}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="0,3">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="30"/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding LineNumber, StringFormat='{}{0})'}" VerticalAlignment="Center" FontWeight="Bold" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                            <TextBox Grid.Column="1" Text="{Binding ServiceDescription, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,0" ToolTip="وصف الخدمة المطلوب / Requested service description"/>
+                                            <TextBox Grid.Column="2" Text="{Binding TechnicianName, UpdateSourceTrigger=PropertyChanged}" ToolTip="اسم الفني / Technician name"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!-- Technician Comments: Cascading Department → Parts Dropdown -->
+                    <GroupBox Header="Technician's Comments / ملاحظات الفني" Foreground="{DynamicResource PrimaryTextBrush}" Margin="0,0,0,10" Padding="10">
+                        <StackPanel>
+                            <!-- Level 1: Department selector -->
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Department / القسم:" FontWeight="Bold" Foreground="{DynamicResource PrimaryTextBrush}" Margin="0,0,0,4"/>
+                                    <ComboBox ItemsSource="{Binding Departments}"
+                                              SelectedItem="{Binding SelectedDepartment}"
+                                              Width="320" HorizontalAlignment="Left"
+                                              ToolTip="اختر القسم من ملف المخزون / Select department from stock file"/>
+                                </StackPanel>
+                                <Button Grid.Column="1" Content="Change Stock File / تغيير ملف المخزون"
+                                        Command="{Binding ChangeStockFileCommand}"
+                                        Padding="10,6" FontSize="11" VerticalAlignment="Bottom" Margin="10,0,0,0"/>
+                            </Grid>
+
+                            <!-- Level 2: Parts filtered by department (conditional dropdown) -->
+                            <StackPanel Margin="0,0,0,10">
+                                <TextBlock Text="Part &amp; Compatible Model / القطعة والموديل المتوافق:" FontWeight="Bold" Foreground="{DynamicResource PrimaryTextBrush}" Margin="0,0,0,4"/>
+                                <ComboBox ItemsSource="{Binding FilteredParts}"
+                                          SelectedItem="{Binding SelectedPartFromDropdown}"
+                                          DisplayMemberPath="DisplayLabel"
+                                          Width="500" HorizontalAlignment="Left"
+                                          ToolTip="اختر القطعة / Select part (يمكن الاختيار متعدد / multi-select supported)"/>
+                                <TextBlock Text="Tip: re-select to add multiple parts / تلميح: كرر الاختيار لإضافة قطع متعددة"
+                                           FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" Margin="0,3,0,0"/>
+                            </StackPanel>
+
+                            <!-- Selected Parts (chips) -->
+                            <TextBlock Text="Selected Parts / القطع المختارة:" FontWeight="Bold" Foreground="{DynamicResource PrimaryTextBrush}" Margin="0,5,0,5"/>
+                            <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="4" Padding="10" MinHeight="60" Background="{DynamicResource BackgroundBrush}">
+                                <ItemsControl ItemsSource="{Binding SelectedParts}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Background="{DynamicResource PrimaryButtonBrush}" CornerRadius="12" Margin="4" Padding="10,5">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding DisplayLabel}" Foreground="{DynamicResource PrimaryButtonForegroundBrush}" VerticalAlignment="Center" FontSize="12"/>
+                                                    <Button Content="✕"
+                                                            Command="{Binding DataContext.RemovePartCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                            CommandParameter="{Binding}"
+                                                            Background="Transparent" Foreground="{DynamicResource PrimaryButtonForegroundBrush}"
+                                                            FontWeight="Bold" BorderThickness="0" Margin="8,0,0,0" Padding="0" Cursor="Hand" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Border>
+                        </StackPanel>
+                    </GroupBox>
+
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+
+        <!-- Save Button Bar -->
+        <Border Grid.Row="1" Background="{DynamicResource CardBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="8" Padding="15" Margin="10,0,10,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Saving the card will automatically open the smart invoice window / عند الحفظ، سيتم تحويلك إلى نافذة الفاتورة الذكية تلقائياً." 
+                           Foreground="{DynamicResource SecondaryTextBrush}" VerticalAlignment="Center" FontSize="12" TextWrapping="Wrap"/>
+                <Button Grid.Column="1" Content="Save &amp; Proceed to Invoice / حفظ ومتابعة إلى الفاتورة" 
+                        Command="{Binding SaveAndProceedCommand}"
+                        CommandParameter="{Binding ElementName=CurrentWindow}"
+                        Padding="25,12" FontSize="16" FontWeight="Bold"/>
+            </Grid>
+        </Border>
+
+    </Grid>
+</Window>

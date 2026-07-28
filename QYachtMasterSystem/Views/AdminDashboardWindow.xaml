@@ -1,0 +1,302 @@
+<Window x:Class="QYachtMaster.Views.AdminDashboardWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d"
+        Title="Admin Dashboard / لوحة تحكم الإدارة" 
+        Height="750" Width="1100"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource BackgroundBrush}">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ═══ Top Header Bar (spans all columns) ═══ -->
+        <Border Grid.Row="0" Grid.ColumnSpan="2"
+                Background="{DynamicResource HeaderBackgroundBrush}"
+                Padding="20,12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Administration Dashboard / لوحة تحكم الإدارة"
+                               FontSize="20" FontWeight="Bold"
+                               Foreground="{DynamicResource HeaderForegroundBrush}"/>
+                    <TextBlock Text="Q-Yacht Master — Secure Management Portal"
+                               FontSize="11" Foreground="#E5D2D5" Margin="0,3,0,0"/>
+                </StackPanel>
+                <TextBlock Grid.Column="1" Text="🔒 Admin Access"
+                           Foreground="{DynamicResource PrimaryButtonBrush}"
+                           FontWeight="Bold" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <!-- ═══ KPI Summary Strip ═══ -->
+        <Border Grid.Row="1" Grid.ColumnSpan="2"
+                Background="{DynamicResource CardBackgroundBrush}"
+                BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1"
+                Padding="15,10">
+            <StackPanel Orientation="Horizontal">
+                <Border Style="{StaticResource KpiCardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Revenue / إجمالي الإيرادات" Style="{StaticResource KpiLabelStyle}"/>
+                        <TextBlock Text="{Binding TotalRevenue, StringFormat='{}{0:N0} QAR'}" Style="{StaticResource KpiValueStyle}" Foreground="{DynamicResource PrimaryButtonBrush}"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource KpiCardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Net Profit / صافي الربح" Style="{StaticResource KpiLabelStyle}"/>
+                        <TextBlock Text="{Binding TotalNetProfit, StringFormat='{}{0:N0} QAR'}" Style="{StaticResource KpiValueStyle}" Foreground="#2ECC71"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource KpiCardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Invoices / عدد الفواتير" Style="{StaticResource KpiLabelStyle}"/>
+                        <TextBlock Text="{Binding TotalInvoices}" Style="{StaticResource KpiValueStyle}"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource KpiCardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Total Debt / إجمالي الديون" Style="{StaticResource KpiLabelStyle}"/>
+                        <TextBlock Text="{Binding TotalDebtOutstanding, StringFormat='{}{0:N0} QAR'}" Style="{StaticResource KpiValueStyle}" Foreground="{DynamicResource DangerBrush}"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource KpiCardStyle}" Margin="0,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Low Stock / قطع منخفضة المخزون" Style="{StaticResource KpiLabelStyle}"/>
+                        <TextBlock Text="{Binding LowStockCount, StringFormat='{}{0} items'}" Style="{StaticResource KpiValueStyle}" Foreground="#E67E22"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <!-- ═══ Left Sidebar Navigation ═══ -->
+        <Border Grid.Row="2" Grid.Column="0"
+                Background="{DynamicResource CardBackgroundBrush}"
+                BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,1,0"
+                Padding="10">
+            <StackPanel>
+                <TextBlock Text="Reports / التقارير" FontWeight="Bold"
+                           Foreground="{DynamicResource SecondaryTextBrush}"
+                           FontSize="11" Margin="5,10,5,5"/>
+
+                <Button x:Name="BtnSales"    Content="📊 Sales / مبيعات"     Click="OnNavClick" Tag="Sales"     Style="{StaticResource NavButtonStyle}"/>
+                <Button x:Name="BtnProfit"   Content="💹 Profit / أرباح"     Click="OnNavClick" Tag="Profit"    Style="{StaticResource NavButtonStyle}"/>
+                <Button x:Name="BtnDebts"    Content="⚠️ Debts / ديون"      Click="OnNavClick" Tag="Debts"     Style="{StaticResource NavButtonStyle}"/>
+                <Button x:Name="BtnTopParts" Content="🏆 Top / الأكثر مبيعاً" Click="OnNavClick" Tag="TopParts"  Style="{StaticResource NavButtonStyle}"/>
+                <Button x:Name="BtnLowStock" Content="📦 Low / نقص مخزون"    Click="OnNavClick" Tag="LowStock"  Style="{StaticResource NavButtonStyle}"/>
+
+                <Separator Margin="5,15" Background="{DynamicResource BorderBrush}"/>
+
+                <TextBlock Text="Tools / أدوات" FontWeight="Bold"
+                           Foreground="{DynamicResource SecondaryTextBrush}"
+                           FontSize="11" Margin="5,0,5,5"/>
+
+                <Button Content="🔄 Sync Parts / مزامنة مخزن"
+                        Command="{Binding OpenExcelSyncCommand}"
+                        Style="{StaticResource NavButtonStyle}"/>
+
+            </StackPanel>
+        </Border>
+
+        <!-- ═══ Main Content Panel (TabControl-like) ═══ -->
+        <Grid Grid.Row="2" Grid.Column="1" Margin="0">
+
+            <!-- Sales Report Panel -->
+            <Grid x:Name="PanelSales" Visibility="Visible">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Background="{DynamicResource CardBackgroundBrush}"
+                         BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1"
+                         Padding="15,10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Sales Report / تقرير المبيعات" Margin="0,0,15,0"
+                                   FontSize="16" FontWeight="Bold" Foreground="{DynamicResource PrimaryTextBrush}" VerticalAlignment="Center"/>
+                        
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                            <!-- Report Mode selection -->
+                            <ComboBox SelectedValue="{Binding SelectedReportMode}" SelectedValuePath="Tag" Width="130" Margin="0,0,10,0" VerticalAlignment="Center">
+                                <ComboBoxItem Content="Monthly / شهري"  Tag="monthly" IsSelected="True"/>
+                                <ComboBoxItem Content="Custom / فترة محددة" Tag="custom"/>
+                            </ComboBox>
+
+                            <!-- Target Month/Year dropdown (visible for monthly/annual) -->
+                            <ComboBox ItemsSource="{Binding AvailablePeriods}" 
+                                      SelectedValue="{Binding SelectedTargetPeriod}" Width="130" Margin="0,0,10,0" VerticalAlignment="Center"
+                                      Visibility="{Binding ShowPeriodSelector, Converter={StaticResource BoolToVis}}"/>
+
+                            <!-- DatePickers for Custom Duration (visible for custom) -->
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                                        Visibility="{Binding ShowCustomDatePickers, Converter={StaticResource BoolToVis}}">
+                                <TextBlock Text="From / من:" VerticalAlignment="Center" Margin="0,0,5,0" Foreground="{DynamicResource PrimaryTextBrush}" FontSize="12"/>
+                                <DatePicker SelectedDate="{Binding StartDate}" Width="115" Margin="0,0,10,0"/>
+                                <TextBlock Text="To / إلى:" VerticalAlignment="Center" Margin="0,0,5,0" Foreground="{DynamicResource PrimaryTextBrush}" FontSize="12"/>
+                                <DatePicker SelectedDate="{Binding EndDate}" Width="115"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <Button Grid.Column="2" Content="📥 Export Excel / تصدير"
+                                Command="{Binding ExportSalesCommand}" Padding="12,7" VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+                <DataGrid VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ScrollViewer.CanContentScroll="True" Grid.Row="1" ItemsSource="{Binding SalesInvoices}"
+                           AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                           Background="Transparent" BorderThickness="0" RowHeight="30"
+                           HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                           HorizontalGridLinesBrush="{DynamicResource BorderBrush}" Margin="5">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Invoice No / رقم الفاتورة"   Binding="{Binding InvoiceNo}" Width="120"/>
+                        <DataGridTextColumn Header="Date &amp; Time / التاريخ والوقت" Binding="{Binding CreatedAt}" Width="155"/>
+                        <DataGridTextColumn Header="Customer Name / اسم العميل"  Binding="{Binding CustomerName}" Width="*"/>
+                        <DataGridTextColumn Header="Sub-Total / المجموع الفرعي"   Binding="{Binding SubTotal, StringFormat='{}{0:N2}'}" Width="120"/>
+                        <DataGridTextColumn Header="Discount / الخصم"            Binding="{Binding Discount, StringFormat='{}{0:N2}'}" Width="100"/>
+                        <DataGridTextColumn Header="Grand Total / الإجمالي الكلي"  Binding="{Binding GrandTotal, StringFormat='{}{0:N2}'}" Width="130"/>
+                        <DataGridTextColumn Header="Parts Cost / تكلفة القطع"    Binding="{Binding PartsCost, StringFormat='{}{0:N2}'}" Width="110"/>
+                        <DataGridTextColumn Header="Invoice Profit / صافي الربح" Binding="{Binding NetProfit, StringFormat='{}{0:N2}'}" Width="130"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+            <!-- Profit Panel -->
+            <Grid x:Name="PanelProfit" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Background="{DynamicResource CardBackgroundBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1"
+                        Padding="15,10">
+                    <Grid>
+                        <TextBlock Text="Parts Profitability / تقرير أرباح القطع" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                        <Button HorizontalAlignment="Right" Content="📥 Export Excel / تصدير"
+                                Command="{Binding ExportProfitCommand}" Padding="12,7"/>
+                    </Grid>
+                </Border>
+                <DataGrid VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ScrollViewer.CanContentScroll="True" Grid.Row="1" ItemsSource="{Binding ProfitRows}"
+                          AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                          Background="Transparent" BorderThickness="0" RowHeight="30"
+                          HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                          HorizontalGridLinesBrush="{DynamicResource BorderBrush}" Margin="5">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Description / الوصف"     Binding="{Binding Description}"                               Width="*"/>
+                        <DataGridTextColumn Header="Qty Sold / الكمية"        Binding="{Binding TotalQtySold, StringFormat='{}{0:N1}'}"     Width="90"/>
+                        <DataGridTextColumn Header="Revenue / الإيرادات"      Binding="{Binding TotalRevenue, StringFormat='{}{0:N2} QAR'}" Width="130"/>
+                        <DataGridTextColumn Header="Cost / التكلفة"           Binding="{Binding TotalCost,    StringFormat='{}{0:N2} QAR'}" Width="120"/>
+                        <DataGridTextColumn Header="Net Profit / صافي الربح"  Binding="{Binding NetProfit,    StringFormat='{}{0:N2} QAR'}" Width="130"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+            <!-- Debts Panel -->
+            <Grid x:Name="PanelDebts" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Background="{DynamicResource CardBackgroundBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1"
+                        Padding="15,10">
+                    <Grid>
+                        <TextBlock Text="Outstanding Debts Ledger / كشف الديون المعلقة" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                        <Button HorizontalAlignment="Right" Content="📥 Export Excel / تصدير"
+                                Command="{Binding ExportDebtsCommand}" Padding="12,7"/>
+                    </Grid>
+                </Border>
+                <DataGrid VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ScrollViewer.CanContentScroll="True" Grid.Row="1" ItemsSource="{Binding DebtRows}"
+                          AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                          Background="Transparent" BorderThickness="0" RowHeight="30"
+                          HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                          HorizontalGridLinesBrush="{DynamicResource BorderBrush}" Margin="5">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name / اسم العميل"        Binding="{Binding Name}"                                      Width="*"/>
+                        <DataGridTextColumn Header="Mobile / الجوال"          Binding="{Binding MobilePhone}"                               Width="130"/>
+                        <DataGridTextColumn Header="Debt (QAR) / المديونية"   Binding="{Binding TotalDebt,   StringFormat='{}{0:N2} QAR'}" Width="150"/>
+                        <DataGridTextColumn Header="Last Visit / آخر زيارة"   Binding="{Binding LastJobDate}"                               Width="130"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+            <!-- Top Selling Panel -->
+            <Grid x:Name="PanelTopParts" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Background="{DynamicResource CardBackgroundBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1"
+                        Padding="15,10">
+                    <Grid>
+                        <TextBlock Text="Top 20 Selling Parts / القطع الأكثر مبيعاً" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                        <Button HorizontalAlignment="Right" Content="📥 Export Excel / تصدير"
+                                Command="{Binding ExportTopSellingCommand}" Padding="12,7"/>
+                    </Grid>
+                </Border>
+                <DataGrid VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ScrollViewer.CanContentScroll="True" Grid.Row="1" ItemsSource="{Binding TopSellingRows}"
+                          AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                          Background="Transparent" BorderThickness="0" RowHeight="30"
+                          HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                          HorizontalGridLinesBrush="{DynamicResource BorderBrush}" Margin="5">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Description / الوصف"      Binding="{Binding Description}"                               Width="*"/>
+                        <DataGridTextColumn Header="Qty / الكمية المباعة"     Binding="{Binding TotalQtySold, StringFormat='{}{0:N1}'}"     Width="150"/>
+                        <DataGridTextColumn Header="Revenue / الإيرادات"      Binding="{Binding TotalRevenue, StringFormat='{}{0:N2} QAR'}" Width="160"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+            <!-- Low Stock Panel -->
+            <Grid x:Name="PanelLowStock" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Background="{DynamicResource WarningBannerBrush}"
+                        BorderBrush="{DynamicResource WarningBorderBrush}" BorderThickness="0,0,0,1"
+                        Padding="15,10">
+                    <Grid>
+                        <TextBlock Text="⚠️ Low Stock Alert (Below 3 Units) / تنبيه نقص المخزون (أقل من 3 وحدات)"
+                                   FontSize="16" FontWeight="Bold" Foreground="{DynamicResource WarningTextBrush}"/>
+                        <Button HorizontalAlignment="Right" Content="📥 Export Excel / تصدير"
+                                Command="{Binding ExportLowStockCommand}" Padding="12,7"/>
+                    </Grid>
+                </Border>
+                <DataGrid VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ScrollViewer.CanContentScroll="True" Grid.Row="1" ItemsSource="{Binding LowStockRows}"
+                          AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                          Background="Transparent" BorderThickness="0" RowHeight="30"
+                          HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                          HorizontalGridLinesBrush="{DynamicResource BorderBrush}" Margin="5">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Part No / رقم القطعة"     Binding="{Binding PartNo}"      Width="130"/>
+                        <DataGridTextColumn Header="Description / الوصف"      Binding="{Binding Description}" Width="*"/>
+                        <DataGridTextColumn Header="Category / الصنف"         Binding="{Binding Category}"    Width="120"/>
+                        <DataGridTextColumn Header="Stock / الرصيد"           Binding="{Binding QtyInStock}"  Width="90"/>
+                        <DataGridTextColumn Header="Location / الموقع"        Binding="{Binding Location}"    Width="120"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</Window>

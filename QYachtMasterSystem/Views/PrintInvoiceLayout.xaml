@@ -1,0 +1,220 @@
+<UserControl x:Class="QYachtMaster.Views.PrintInvoiceLayout"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="1123" d:DesignWidth="794"
+             Background="White"
+             FontFamily="Arial"
+             Padding="40">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top Header Area (Similar to physical invoice image) -->
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Workshop Address details -->
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Q-YACHT MASTER ENTERPRISE" FontSize="18" FontWeight="Bold" Foreground="Black"/>
+                <TextBlock Text="كيو يخت ماستر إنتربرايز" FontSize="18" FontWeight="Bold" Foreground="Black" Margin="0,2,0,5"/>
+                <TextBlock Text="Mobile : +974 7226 1467" FontSize="11" Foreground="Black"/>
+                <TextBlock Text="Lusail Marina, Doha - Qatar" FontSize="11" Foreground="Black"/>
+                <TextBlock Text="C.R. No : 123123, Doha - Qatar" FontSize="11" Foreground="Black"/>
+            </StackPanel>
+
+            <!-- Center Logo Area Placeholder -->
+            <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" Width="80" Height="80" CornerRadius="40" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="QYM" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"/>
+            </Border>
+
+            <!-- Right Invoice Header metadata -->
+            <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                <TextBlock Text="INVOICE" FontSize="24" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Right"/>
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                    <TextBlock Text="Date / التاريخ: " FontSize="11" Foreground="Black"/>
+                    <TextBlock x:Name="InvoiceDateText" FontSize="11" FontWeight="Bold" Foreground="Black"/>
+                </StackPanel>
+                <Border BorderBrush="Black" BorderThickness="1" Padding="10,5">
+                    <StackPanel>
+                        <TextBlock x:Name="VehMakeText" FontSize="11" Foreground="Black"/>
+                        <TextBlock x:Name="VehModelText" FontSize="11" Foreground="Black"/>
+                        <TextBlock x:Name="VehYearText" FontSize="11" Foreground="Black"/>
+                        <TextBlock x:Name="VehRegText" FontSize="11" Foreground="Black"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <!-- Customer & Invoice Metadata Info -->
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0,1,0,1" Padding="0,10" Margin="0,0,0,20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock x:Name="InvoiceNoText" FontSize="14" FontWeight="Bold" Foreground="Red" Margin="0,0,0,5"/>
+                    <TextBlock x:Name="CustomerNameText" FontSize="12" Foreground="Black"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                    <TextBlock x:Name="CustomerPhoneText" FontSize="12" Foreground="Black"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Invoiced Items Grid Table (WPF ItemsControl) -->
+        <Grid Grid.Row="2" Margin="0,0,0,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header Row -->
+            <Border Grid.Row="0" Background="#F2F2F2" BorderBrush="Black" BorderThickness="1" Padding="5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="No. / الرقم" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="Description / التفاصيل" FontSize="10" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <TextBlock Grid.Column="2" Text="Qty. / الكمية" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Column="3" Text="Unit Price / أجر الوحدة" FontSize="10" FontWeight="Bold" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="4" Text="Amount / المبلغ" FontSize="10" FontWeight="Bold" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="5" Text="Warranty / الضمان" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
+                </Grid>
+            </Border>
+
+            <!-- Items List -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Disabled">
+                <ItemsControl x:Name="ItemsList" BorderBrush="Black" BorderThickness="1,0,1,1">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Padding="5,8">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="40"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="110"/>
+                                        <ColumnDefinition Width="110"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding Index}" HorizontalAlignment="Center" FontSize="11" Foreground="Black"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Description}" Margin="10,0,0,0" FontSize="11" Foreground="Black" TextWrapping="Wrap"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding Qty}" HorizontalAlignment="Center" FontSize="11" Foreground="Black"/>
+                                    <TextBlock Grid.Column="3" Text="{Binding UnitPrice, StringFormat='{}{0:F2}'}" HorizontalAlignment="Right" FontSize="11" Foreground="Black"/>
+                                    <TextBlock Grid.Column="4" Text="{Binding FinalLineTotal, StringFormat='{}{0:F2}'}" HorizontalAlignment="Right" FontSize="11" Foreground="Black"/>
+                                    <TextBlock Grid.Column="5" Text="{Binding Warranty}" HorizontalAlignment="Center" FontSize="10" Foreground="Black"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+
+        <!-- Footer Area: Warranty, Totals, Signatures, QR Code -->
+        <Grid Grid.Row="3" VerticalAlignment="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left: Warranty and Signatures -->
+            <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,20,0">
+                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="4" Padding="10" Height="80" Margin="0,0,0,30">
+                    <TextBlock Text="WARRANTY / الكفالة: ____________________________________________________" FontSize="10" Foreground="Black"/>
+                </Border>
+
+                <!-- Signatures -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                        <TextBlock Text="________________________" FontSize="11" Foreground="Black"/>
+                        <TextBlock Text="Receiver's Sign. / توقيع المستلم" FontSize="9" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                        <TextBlock Text="________________________" FontSize="11" Foreground="Black"/>
+                        <TextBlock Text="Salesman's Sign. / توقيع البائع" FontSize="9" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+
+            <!-- Right: QR Code and Financial Totals -->
+            <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Width="280">
+                <Grid Margin="0,2">
+                    <TextBlock Text="Sub-Total / الإجمالي الفرعي:" FontSize="11" Foreground="Black"/>
+                    <TextBlock x:Name="SubTotalText" HorizontalAlignment="Right" FontSize="11" FontWeight="Bold" Foreground="Black"/>
+                </Grid>
+                <Grid Margin="0,2">
+                    <TextBlock Text="Discount / الخصم:" FontSize="11" Foreground="Black"/>
+                    <TextBlock x:Name="DiscountText" HorizontalAlignment="Right" FontSize="11" Foreground="Black"/>
+                </Grid>
+                <Grid Margin="0,2">
+                    <TextBlock Text="Labor Fees / أجور اليد:" FontSize="11" Foreground="Black"/>
+                    <TextBlock x:Name="LaborText" HorizontalAlignment="Right" FontSize="11" Foreground="Black"/>
+                </Grid>
+                <Grid Margin="0,2">
+                    <TextBlock Text="Previous Debt / الدين السابق:" FontSize="11" Foreground="Black"/>
+                    <TextBlock x:Name="PreviousDebtText" HorizontalAlignment="Right" FontSize="11" Foreground="Red"/>
+                </Grid>
+                <Grid Margin="0,2">
+                    <TextBlock Text="Debt Payment / سداد من الدين:" FontSize="11" Foreground="Black"/>
+                    <TextBlock x:Name="DebtPaymentText" HorizontalAlignment="Right" FontSize="11" Foreground="Green"/>
+                </Grid>
+                
+                <Border BorderBrush="Black" BorderThickness="0,1,0,0" Margin="0,5" Padding="0,5">
+                    <Grid>
+                        <TextBlock Text="Total QRs. / المجموع ر.ق:" FontSize="14" FontWeight="Bold" Foreground="Black"/>
+                        <TextBlock x:Name="GrandTotalText" HorizontalAlignment="Right" FontSize="14" FontWeight="Bold" Foreground="Black"/>
+                    </Grid>
+                </Border>
+
+                <Grid Margin="0,2">
+                    <TextBlock Text="Amount Paid / المدفوع فعلياً:" FontSize="11" FontWeight="Bold" Foreground="Black"/>
+                    <TextBlock x:Name="PaidAmountText" HorizontalAlignment="Right" FontSize="11" FontWeight="Bold" Foreground="Black"/>
+                </Grid>
+                <Grid Margin="0,2">
+                    <TextBlock Text="Balance Due / الدين المتبقي:" FontSize="11" FontWeight="Bold" Foreground="Crimson"/>
+                    <TextBlock x:Name="BalanceDueText" HorizontalAlignment="Right" FontSize="11" FontWeight="Bold" Foreground="Crimson"/>
+                </Grid>
+
+                <!-- Dynamic QR code display (Module 3/5) -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                    <TextBlock Text="SCAN TO PAY / امسح للدفع" FontSize="8" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <Image x:Name="QrCodeImage" Width="80" Height="80"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Bottom Disclaimer -->
+            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" 
+                       Text="MAKE ALL PAYABLE TO Q-YACHT MASTER ENTERPRISE. THANK YOU FOR YOUR BUSINESS" 
+                       FontSize="9" FontWeight="Bold" TextAlignment="Center" Margin="0,30,0,0"/>
+        </Grid>
+
+    </Grid>
+</UserControl>

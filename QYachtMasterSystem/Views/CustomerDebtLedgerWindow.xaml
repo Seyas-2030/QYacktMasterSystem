@@ -1,0 +1,49 @@
+<Window x:Class="QYachtMaster.Views.CustomerDebtLedgerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Customer Debt Statement &amp; Ledger / كشف حساب وديون العميل" 
+        Height="600" Width="850"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource BackgroundBrush}">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top Header -->
+        <Border Grid.Row="0" Background="{DynamicResource HeaderBackgroundBrush}" CornerRadius="6" Padding="15" Margin="0,0,0,15">
+            <DockPanel LastChildFill="False">
+                <StackPanel DockPanel.Dock="Left">
+                    <TextBlock x:Name="TxtCustomerName" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource HeaderForegroundBrush}"/>
+                    <TextBlock x:Name="TxtCustomerPhone" FontSize="12" Foreground="#E5D2D5" Margin="0,3,0,0"/>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right">
+                    <TextBlock Text="Total Outstanding Debt / إجمالي الدين المتبقي" FontSize="11" Foreground="#E5D2D5" TextAlignment="Right"/>
+                    <TextBlock x:Name="TxtTotalDebt" FontSize="20" FontWeight="Bold" Foreground="#FF8EA4" TextAlignment="Right"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- Invoices & Payments Grid -->
+        <Border Grid.Row="1" Background="{DynamicResource CardBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="6" Padding="10">
+            <DataGrid x:Name="GridLedger" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" RowHeight="30" Background="Transparent" BorderThickness="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Invoice No / رقم الفاتورة" Binding="{Binding InvoiceNo}" Width="150"/>
+                    <DataGridTextColumn Header="Date / التاريخ" Binding="{Binding Date}" Width="140"/>
+                    <DataGridTextColumn Header="Grand Total / الإجمالي" Binding="{Binding GrandTotal, StringFormat='{}{0:N2} QAR'}" Width="130"/>
+                    <DataGridTextColumn Header="Paid / المدفوع" Binding="{Binding PaidAmount, StringFormat='{}{0:N2} QAR'}" Width="130"/>
+                    <DataGridTextColumn Header="Remaining Debt / الدين المتبقي" Binding="{Binding RemainingDebt, StringFormat='{}{0:N2} QAR'}" Width="150"/>
+                    <DataGridTextColumn Header="Status / الحالة" Binding="{Binding Status}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <!-- Action Buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+            <Button Content="إغلاق / Close" Click="OnCloseClick" Width="100" Padding="10,6" Background="{DynamicResource PrimaryButtonBrush}" Foreground="White"/>
+        </StackPanel>
+    </Grid>
+</Window>
